@@ -1,0 +1,15 @@
+Russia,        144,500,000 Cold, 3/5
+Asia,         1,413,227,603, Cold, 3/5
+Korea,        51,640,000, Cold, 3/5
+India,         1,457,015,015, Hot, 3/5
+Middle East,     411,000,000, Hot, 3/5
+Africa,     1,216,000,000 Hot, 1/5
+France,     66,900,000 Cold, 4/5
+Italy,         60,360,000 Cold, 4/5
+Spain,         46,940,000 Hot, 4/5
+Germany,     83,020,000 Cold, 5/5 
+USA,        316,128,839, Cold, 5/5
+Canada,        35,158,304, Cold, 5/5
+Australia    23,130,900, Cold, 4/5
+South America,     422,500,000, Hot, 2/5
+Japan,         126,500,000 Cold, 5/5
