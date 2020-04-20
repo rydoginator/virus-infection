@@ -2,6 +2,7 @@ package infected;
 
 public class Country {
 	private String name;
+	// temperature will be a boolean on whether it's hot or not
 	private boolean temp;
 	private int population;
 	private int infected;
@@ -17,19 +18,32 @@ public class Country {
 		this.deceased = 0;
 	}
 	
-	private String getName() {
+	public String getName() {
 		return name;
 	}
 	
-	private int getPop() {
+	public int getPop() {
 		return population;
 	}
 	
-	private Boolean getTemp() {
+	public Boolean getTemp() {
 		return temp;
 	}
 	
-	private int getWealth() {
+	public int getWealth() {
 		return wealth;
+	}
+	
+	public String toString() {
+		return name;
+	}
+	
+	public String getInfo() {
+        String tmp = "";
+        tmp = "Name: " + name + 
+        		"\nPopulation: " + population +
+        		"\nTemperature: " + ((temp) ? "Hot" : "Cold") +
+        		"\nWealth: " + wealth + "/5";
+        return tmp;		
 	}
 }
