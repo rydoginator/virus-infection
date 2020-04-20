@@ -54,7 +54,9 @@ public class Country {
 	}
 	
 	
-	
+	/*
+	 * Returns all the attributes of the object in a readable format
+	 */
 	public String getInfo() {
         String tmp = "";
         tmp = "Name: " + name + 
