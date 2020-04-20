@@ -28,6 +28,7 @@ public class Main extends Application {
     Label countryLabel, symptomLabel, countryInfo, virusName;
     ComboBox symptomBox;
     ComboBox<Country>countryBox;
+    ArrayList<Country> countries;
     Button startButton;
     
 	@Override
@@ -36,12 +37,14 @@ public class Main extends Application {
 	        window = primaryStage;
 	        window.setTitle("Virus Infection Game");
 			TilePane root = new TilePane();
-			ArrayList<Country> countries = readCountries();
+			countries = readCountries();
 			// Title
 			startButton = new Button("Start Game");
 			// create action for start button
 			startButton.setOnAction(e -> {
-				CountryView view = new CountryView();
+				CountryView view = new CountryView(countries);
+				window.setHeight(420);
+				window.setWidth(850);
 			    primaryStage.getScene().setRoot(view.getRootPane());
 			});
 			
