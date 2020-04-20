@@ -58,7 +58,7 @@ public class Country {
 	public String getInfo() {
         String tmp = "";
         tmp = "Name: " + name + 
-        		"\nPopulation: " + population +
+        		"\nPopulation: " + String.format("%,d", population) +
         		"\nTemperature: " + ((temp) ? "Hot" : "Cold") +
         		"\nWealth: " + wealth + "/5";
         return tmp;		

@@ -26,9 +26,10 @@ public class Main extends Application {
     Stage window;
     TextField nameInput;
     Label countryLabel, symptomLabel, countryInfo, virusName;
-    ComboBox symptomBox;
+    ComboBox<Symptom> symptomBox;
     ComboBox<Country>countryBox;
     ArrayList<Country> countries;
+    ArrayList<Symptom> symptoms;
     Button startButton;
     
 	@Override
@@ -38,6 +39,7 @@ public class Main extends Application {
 	        window.setTitle("Virus Infection Game");
 			TilePane root = new TilePane();
 			countries = readCountries();
+			symptoms = readSymptoms();
 			// Title
 			startButton = new Button("Start Game");
 			// create action for start button
@@ -53,10 +55,10 @@ public class Main extends Application {
 			nameInput = new TextField();
 			nameInput.setPromptText("Name");
 			
-			symptomLabel = new Label("Symptoms");
-			symptomBox = new ComboBox();
+			symptomLabel = new Label("Choose the starting symptom");
+			symptomBox = new ComboBox<Symptom>(FXCollections.observableArrayList(symptoms));
 			
-			countryLabel = new Label("Choose the country");
+			countryLabel = new Label("Choose the starting country");
 			countryBox = new ComboBox<Country>(FXCollections.observableArrayList(countries));
 			countryBox.setOnAction(updateInfo);
 			countryInfo = new Label("Country info:");
@@ -111,13 +113,14 @@ public class Main extends Application {
 	 */
 	private static ArrayList<Country> readCountries() 
 	{
+		// create arraylist object, which will be returned later
 		ArrayList<Country> countries = new ArrayList<Country>();
 		ArrayList<String> names = readNames("countries.txt");
 		for (String s : names)
 		{
 			String name = s.substring(0, s.indexOf(','));
 			s = s.substring(s.indexOf(',') + 1, s.length());
-			int population = Integer.parseInt(s.substring(0, s.indexOf(',') - 1));
+			int population = Integer.parseInt(s.substring(0, s.indexOf(',')));
 			s = s.substring(s.indexOf(',') + 1, s.length());
 			Boolean hot = s.substring(0, s.indexOf(',')).equals("Hot");
 			s = s.substring(s.indexOf(',') + 1, s.length());
@@ -125,5 +128,21 @@ public class Main extends Application {
 			countries.add(new Country(name, population, hot, wealth));
 		}
 		return countries;
+	}
+	
+	private static ArrayList<Symptom> readSymptoms() 
+	{
+		ArrayList<Symptom> symptoms = new ArrayList<Symptom>();
+		ArrayList<String> names = readNames("symptoms.txt");
+		for (String s : names)
+		{
+			String name = s.substring(0, s.indexOf(','));
+			s = s.substring(s.indexOf(',') + 1, s.length());
+			int infectivity = Integer.parseInt(s.substring(0, s.indexOf(',')));
+			s = s.substring(s.indexOf(',') + 1, s.length());
+			int lethality = Integer.parseInt(s);
+			symptoms.add(new Symptom(name, infectivity, lethality));
+		}
+		return symptoms;
 	}
 }
