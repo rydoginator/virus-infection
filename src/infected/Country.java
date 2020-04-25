@@ -21,6 +21,15 @@ public class Country {
 		return name;
 	}
 	
+	public void addSick(int sick) {
+		if (sick > healthy)
+		{
+			sick = healthy;
+		}
+		infected = sick;
+		healthy -= sick;
+	}
+	
 	public int getHealthy() {
 		return healthy;
 	}

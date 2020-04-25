@@ -47,8 +47,10 @@ public class Main extends Application {
 			// create action for start button
 			startButton.setOnAction(e -> {
 				// load the second stage
-				CountryView view = new CountryView(countries);
-				window.setHeight(420);
+				Virus virus = new Virus(nameInput.getText(), symptomBox.getValue());
+				countryBox.getValue().addSick(1);
+				CountryView view = new CountryView(new World(countries, virus));
+				window.setHeight(820);
 				window.setWidth(850);
 			    primaryStage.getScene().setRoot(view.getRootPane());
 			});
@@ -160,5 +162,10 @@ public class Main extends Application {
 			symptoms.add(new Symptom(name, infectivity, lethality));
 		}
 		return symptoms;
+	}
+	
+	private static void Update() 
+	{
+		
 	}
 }

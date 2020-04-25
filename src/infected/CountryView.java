@@ -3,6 +3,7 @@ package infected;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -10,16 +11,24 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+
 public class CountryView {
 		private ArrayList<Country> countries;
+		private World world;
 		private final BorderPane rootPane;
 	    TableView<Country> table;
 	    private TableColumn<Country, String> colName;
 	    private TableColumn<Country, Integer> colHealth, colInfected, colDeceased;
+	    private Label dayLabel;
+	    private boolean running;
 
 	    
-	    public CountryView(ArrayList<Country> countries) {
-	    	this.countries = countries;
+	    public CountryView(World world) {
+	    	this.world = world;
+	    	this.countries = world.getCountries();
+	    	OnWorldListener mListener = new WorldUpdater();
+	    	world.registerEventListener(mListener);
+	    	world.createThread();
 	    	// create new table with values from the country objects
 	        table = new TableView<Country>();
 	        // name column
@@ -50,8 +59,10 @@ public class CountryView {
 	        {
 	        	table.getItems().add(c);
 	        }
+	        dayLabel = new Label("Day: " + world.getDay());
 	        // update the rootpane for the stage
 	        rootPane = new BorderPane(table);
+	        rootPane.setBottom(dayLabel);
 	    }
 
 	    public Pane getRootPane() {
