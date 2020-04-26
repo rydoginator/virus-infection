@@ -25,4 +25,20 @@ public class Virus {
 	public void addSymptom(Symptom symptom) {
 		this.symptoms.add(symptom);
 	}
+	
+	public int getInfectivity() {
+		int infectivity = 0;
+		for (Symptom s: symptoms)
+		{
+			infectivity += s.getInfectivity();
+		}
+		return infectivity;
+	}
+	
+	public int getLethality() {
+		int lethality = 0;
+		for (Symptom s: symptoms)
+			lethality += s.getLethality();
+		return lethality;
+	}
 }

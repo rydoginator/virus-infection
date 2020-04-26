@@ -44,5 +44,29 @@ public class World {
 			c.addSick(1);
 		}
 	}
-
+	
+	// geneerate a random number for min and max
+    private int random(int min, int max) {
+        return (int) (Math.random()*(max-min))+min;
+    }
+	
+	public void spread() {
+		int infectivity = virus.getInfectivity(); // use this to determine infectivity
+		for (Country c: countries) {
+			if (c.getSick() > 1)
+			{
+				// exponential function here to incorporate 
+				// get the countries wealth. this will be a % of the people that will travel to another country for this day
+				int travel = c.getWealth(); 
+				int sickTravelers = travel * (c.getSick() / c.getHealthy()); // this will determine how many travelers will travel to another country
+				// to make things simple, and less chaotic, a rng of 0 to 10 will determine whether they are sick enough to travel or not
+				boolean willTravel = (random(1,10) == 1) ? true: false;
+				// chose which country to infect based
+				int id = random(0, countries.size());
+				if (willTravel)
+					countries.get(id).addSick(sickTravelers); // the sick travelers will only spread to 1 other person in the country
+			}
+						
+		}
+	}
 }
