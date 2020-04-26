@@ -2,12 +2,15 @@ package infected;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -27,8 +30,6 @@ public class CountryView {
 	    	this.world = world;
 	    	this.countries = world.getCountries();
 	    	OnWorldListener mListener = new WorldUpdater();
-	    	world.registerEventListener(mListener);
-	    	world.createThread();
 	    	// create new table with values from the country objects
 	        table = new TableView<Country>();
 	        // name column
@@ -59,10 +60,32 @@ public class CountryView {
 	        {
 	        	table.getItems().add(c);
 	        }
+	      //Create a HBox for the table and set its position
+	        HBox tableBox = new HBox(table);
+	        tableBox.setAlignment(Pos.CENTER);
+	                        
+	        //Label to change the day
 	        dayLabel = new Label("Day: " + world.getDay());
-	        // update the rootpane for the stage
-	        rootPane = new BorderPane(table);
-	        rootPane.setBottom(dayLabel);
+	        dayLabel.setPrefSize(70,70);
+	                    
+	        // Paste the table on the stage
+	        rootPane = new BorderPane(tableBox);
+	                        
+	        //Create a button to update the info of each country by the # of days
+	        Button nextDayButton = new Button("Next Day");
+	        nextDayButton.setPrefSize(70, 70);
+	                        
+	        nextDayButton.setOnAction(e -> {
+	                   
+	        });
+	                        
+	        //Horizontal box to show the number of days and the button
+	        HBox hbox = new HBox(dayLabel, nextDayButton);
+	        hbox.setAlignment(Pos.CENTER);
+	                        
+	        //Place the HBox location at the bottom
+	        rootPane.setBottom(hbox);
+	        rootPane.setPrefSize(70, 70);
 	    }
 
 	    public Pane getRootPane() {
