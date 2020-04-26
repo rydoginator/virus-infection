@@ -29,7 +29,6 @@ public class CountryView {
 	    public CountryView(World world) {
 	    	this.world = world;
 	    	this.countries = world.getCountries();
-	    	OnWorldListener mListener = new WorldUpdater();
 	    	// create new table with values from the country objects
 	        table = new TableView<Country>();
 	        // name column
@@ -65,9 +64,9 @@ public class CountryView {
 	        tableBox.setAlignment(Pos.CENTER);
 	                        
 	        //Label to change the day
-	        dayLabel = new Label("Day: " + world.getDay());
+	        dayLabel = new Label();
 	        dayLabel.setPrefSize(70,70);
-	                    
+	        updateDayLabel();
 	        // Paste the table on the stage
 	        rootPane = new BorderPane(tableBox);
 	                        
@@ -75,10 +74,7 @@ public class CountryView {
 	        Button nextDayButton = new Button("Next Day");
 	        nextDayButton.setPrefSize(70, 70);
 	                        
-	        nextDayButton.setOnAction(e -> {
-	                   
-	        });
-	                        
+	        nextDayButton.setOnAction(e -> update());
 	        //Horizontal box to show the number of days and the button
 	        HBox hbox = new HBox(dayLabel, nextDayButton);
 	        hbox.setAlignment(Pos.CENTER);
@@ -86,6 +82,17 @@ public class CountryView {
 	        //Place the HBox location at the bottom
 	        rootPane.setBottom(hbox);
 	        rootPane.setPrefSize(70, 70);
+	    }
+	    
+	    private void updateDayLabel() {
+	    	dayLabel.setText("Day: " + world.getDay());
+	    }
+	    
+	    public void update(){
+	    	world.incrementDay();
+	    	updateDayLabel();
+	    	// update the tableview
+	    	table.refresh();
 	    }
 
 	    public Pane getRootPane() {

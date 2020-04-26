@@ -33,5 +33,16 @@ public class World {
 		return day;
 	}
 	
+	public void setDay(int day) {
+		this.day = day;
+	}
+	
+	
+	public void incrementDay() {
+		this.day++;
+		for (Country c: countries) {
+			c.addSick(1);
+		}
+	}
 
 }

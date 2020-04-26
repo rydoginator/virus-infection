@@ -26,7 +26,7 @@ public class Country {
 		{
 			sick = healthy;
 		}
-		infected = sick;
+		infected += sick;
 		healthy -= sick;
 	}
 	
