@@ -139,7 +139,14 @@ public class Main extends Application {
 			Boolean hot = s.substring(0, s.indexOf(',')).equals("Hot");
 			s = s.substring(s.indexOf(',') + 1, s.length());
 			int wealth = Integer.parseInt(s);
-			countries.add(new Country(name, population, hot, wealth));
+			if (hot)
+			{
+				countries.add(new HotCountry(name, population, wealth));
+			}
+			else
+			{
+				countries.add(new ColdCountry(name, population, wealth));
+			}
 		}
 		return countries;
 	}
@@ -162,10 +169,5 @@ public class Main extends Application {
 			symptoms.add(new Symptom(name, infectivity, lethality));
 		}
 		return symptoms;
-	}
-	
-	private static void Update() 
-	{
-		
 	}
 }

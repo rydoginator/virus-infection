@@ -7,10 +7,9 @@ public class Country {
 	private int population, infected, deceased, healthy;
 	private int wealth;
 	
-	public Country(String name, int population, boolean temp, int wealth) {
+	public Country(String name, int population, int wealth) {
 		this.name = name;
 		this.population = population;
-		this.temp = temp;
 		this.wealth = wealth;
 		this.healthy = population;
 		this.infected = 0;
