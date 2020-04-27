@@ -34,21 +34,25 @@ public class CountryView {
 	        // name column
 	        colName = new TableColumn<>("Country Name");
 	        colName.setMinWidth(250);
+	        // create a new cellvaluefactory that gets the name property from the country object
 	        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
 	        
 	        // healthy population column
 	        colHealth = new TableColumn<>("Healthy");
 	        colHealth.setMinWidth(200);
+	         // create a new cellvaluefactory that gets the healthy property from the country object
 	        colHealth.setCellValueFactory(new PropertyValueFactory<>("healthy"));
 	        
 	        // infected population column
 	        colInfected = new TableColumn<>("Infected");
 	        colInfected.setMinWidth(200);
+	        // create a new cellvaluefactory that gets the infected property from the country object
 	        colInfected.setCellValueFactory(new PropertyValueFactory<>("infected"));
 	        
 	        // deceased population column
 	        colDeceased = new TableColumn<>("Dead");
 	        colDeceased.setMinWidth(200);
+	        // create a new cellvaluefactory that gets the deceased property from the country object
 	        colDeceased.setCellValueFactory(new PropertyValueFactory<>("deceased"));
 	        
 	        // add all columns to the table

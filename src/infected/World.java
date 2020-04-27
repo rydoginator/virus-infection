@@ -37,15 +37,21 @@ public class World {
 		this.day = day;
 	}
 	
-	
+	/*
+	 * incrementDay just sets the world day to a new day
+	 * here, we can implement any spreading or killing that the virus might do
+	 */
 	public void incrementDay() {
 		this.day++;
-		for (Country c: countries) {
-			c.addSick(1);
-		}
 	}
 	
 	// geneerate a random number for min and max
+	/*
+	 * random generates a random number and casts to a int since Math.random() returns a double
+	 * @param min the minimum number that you want returned
+	 * @param max the maximum number that you want returned
+	 * @returns the random number that was generated
+	 */
     private int random(int min, int max) {
         return (int) (Math.random()*(max-min))+min;
     }

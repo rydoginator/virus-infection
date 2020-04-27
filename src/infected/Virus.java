@@ -12,20 +12,33 @@ public class Virus {
 		this.symptoms = new ArrayList<Symptom>();
 		this.symptoms.add(symptom);
 	}
+	/*
+	 * getName Getter for the name property
+	 * @returns the name
+	 */
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
+	/*
+	 * getSymptoms will return an array list of symptoms
+	 * @returns the symptom objects in an array
+	 */
 	public ArrayList<Symptom> getSymptoms() {
 		return symptoms;
 	}
 	
+	/*
+	 * addSymptom will take a symptom object and add it to the end of the symptom arraylist
+	 */
 	public void addSymptom(Symptom symptom) {
 		this.symptoms.add(symptom);
 	}
 	
+	/*
+	 * getInfectivity() will loop through the list of symptoms and accumulate what the infectivitiy is
+	 * @returns infectivity, the points of infectivity that it has
+	 */
 	public int getInfectivity() {
 		int infectivity = 0;
 		for (Symptom s: symptoms)
@@ -34,7 +47,10 @@ public class Virus {
 		}
 		return infectivity;
 	}
-	
+	/*
+	 * getgetLethality() will loop through the list of symptoms and accumulate what the lethality is
+	 * @returns lethality, the points of lethality that it has
+	 */
 	public int getLethality() {
 		int lethality = 0;
 		for (Symptom s: symptoms)
