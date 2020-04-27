@@ -3,7 +3,7 @@ Sore Throat,2,0
 Headache,2,0
 Fever,2,0
 Sneezing,2,0
-Shortness Of Breath,2,0
+Shortness Of Breath,2,1
 Chills,2,0
-Lung Failure,2,0
-Muscle Pain,2,0
+Lung Failure,2,20
+Muscle Pain,2,1

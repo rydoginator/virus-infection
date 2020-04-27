@@ -37,14 +37,6 @@ public class World {
 		this.day = day;
 	}
 	
-	/*
-	 * incrementDay just sets the world day to a new day
-	 * here, we can implement any spreading or killing that the virus might do
-	 */
-	public void incrementDay() {
-		this.day++;
-	}
-	
 	// geneerate a random number for min and max
 	/*
 	 * random generates a random number and casts to a int since Math.random() returns a double
@@ -56,23 +48,29 @@ public class World {
         return (int) (Math.random()*(max-min))+min;
     }
 	
-	public void spread() {
-		int infectivity = virus.getInfectivity(); // use this to determine infectivity
+	/*
+	 * incrementDay just sets the world day to a new day
+	 * here, we can implement any spreading or killing that the virus might do
+	 */
+	public void incrementDay() {
+		// loop through the countries
 		for (Country c: countries) {
-			if (c.getSick() > 1)
+			if (c.getSick() > 0) // check if a country has any sick people
 			{
-				// exponential function here to incorporate 
-				// get the countries wealth. this will be a % of the people that will travel to another country for this day
+				c.spread(virus);
 				int travel = c.getWealth(); 
-				int sickTravelers = travel * (c.getSick() / c.getHealthy()); // this will determine how many travelers will travel to another country
+				int sickTravelers = travel * (c.getSick() / c.getPop()); // this will determine how many travelers will travel to another country
 				// to make things simple, and less chaotic, a rng of 0 to 10 will determine whether they are sick enough to travel or not
-				boolean willTravel = (random(1,10) == 1) ? true: false;
-				// chose which country to infect based
+				boolean willTravel = (random(1,3) == 1) ? true: false;
+				// chose which country to infect based on rng
 				int id = random(0, countries.size());
 				if (willTravel)
 					countries.get(id).addSick(sickTravelers); // the sick travelers will only spread to 1 other person in the country
 			}
-						
+			c.decay(virus);		
 		}
+		// increment the day
+		this.day++;
 	}
+
 }

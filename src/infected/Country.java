@@ -41,6 +41,13 @@ public class Country {
 			day = 1;
 	}
 	
+	public void setSick(int sick) {
+		if (sick > infected)
+		{
+			addSick(sick - infected);
+		}
+	}
+	
 	/*
 	 * Getters and setters for the attributes
 	 */
@@ -65,6 +72,10 @@ public class Country {
 		return population;
 	}
 	
+	public int getDay() {
+		return day;
+	}
+	
 	
 	public int getWealth() {
 		return wealth;
@@ -74,11 +85,32 @@ public class Country {
 		return name;
 	}
 	
+	public void incrementDay() {
+		this.day++;
+	}
+	
+	public void addDeceased(int deceased) {
+		if (deceased > population)
+		{
+			// prevent integer underflow
+			deceased = population;
+		}
+		else
+		{
+			population -= deceased;
+			infected -= deceased;
+			this.deceased += deceased;
+		}
+	}
+	
 	/*
-	 * spread will handle an exponential equation in order to 
+	 * spread will handle an exponential equation in order to spread throughout the country
 	 */
-	private void spread(Virus virus) {
-		
+	void spread(Virus virus) {
+		double EULER = 2.718f;
+		// using Euler's number for exponential growth https://www.mathsisfun.com/algebra/exponential-growth.html
+		infected = (int) (infected * Math.pow(EULER, virus.getInfectivity() * day));
+		day++;		
 	}
 	
 	
@@ -91,5 +123,44 @@ public class Country {
         		"\nPopulation: " + String.format("%,d", population) +
         		"\nWealth: " + wealth + "/5";
         return tmp;		
+	}
+	
+	// geneerate a random number for min and max
+	/*
+	 * random generates a random number and casts to a int since Math.random() returns a double
+	 * @param min the minimum number that you want returned
+	 * @param max the maximum number that you want returned
+	 * @returns the random number that was generated
+	 */
+    private int random(int min, int max) {
+        return (int) (Math.random()*(max-min))+min;
+    }
+    
+    private Boolean range(int low, int high, int x) {
+    	return ((x - low) <= (high - low));
+    }
+	
+	
+    /*
+     * decay will generate a random number inside a loop to determine whether the person dies
+     * @param Virus virus, the virus to get it's data
+     */
+	public void decay(Virus virus) {
+		int lethality = virus.getLethality();
+		int rng;
+		int decayed = 0;
+		if (lethality > 0)
+		{
+			for (int i = 0; i < infected; i++)
+			{
+				rng = random(1, 100); // roll a dice between 1,100, and if it is in range of lethality, then kill the person
+				if (range(0, lethality, rng)) // check if the rng is in range, if so, the person decays
+				{
+					decayed++;
+				}
+			}
+			addDeceased(decayed);
+		}
+		
 	}
 }
