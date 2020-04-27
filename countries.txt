@@ -1,4 +1,4 @@
-Russia,144500000,Cold,3
+Russia,14450000,Cold,3
 Asia,1413227603,Cold,3
 Korea,51640000,Cold,3
 India,1457015015,Hot,3

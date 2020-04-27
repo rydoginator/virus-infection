@@ -3,7 +3,12 @@ package infected;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+
 import javafx.event.ActionEvent; 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,11 +31,12 @@ public class Main extends Application {
     Stage window;
     TextField nameInput;
     Label countryLabel, symptomLabel, countryInfo, virusName;
-    ComboBox<Symptom> symptomBox;
+    ComboBox<String> symptomBox;
     ComboBox<Country>countryBox;
     ArrayList<Country> countries;
     ArrayList<Symptom> symptoms;
     Button startButton;
+    HashMap<String, Symptom> symptomMap;
     
 	@Override
 	public void start(Stage primaryStage) {
@@ -41,15 +47,19 @@ public class Main extends Application {
 			TilePane root = new TilePane();
 			// load the arraylists for the symptom and country objects
 			countries = readCountries();
-			symptoms = readSymptoms();
+			// create a new hashmap to store all the symptoms
+			symptomMap = new HashMap<String, Symptom>();
+			readSymptoms();
 			// start button
 			startButton = new Button("Start Game");
 			// create action for start button
 			startButton.setOnAction(e -> {
 				// load the second stage
-				Virus virus = new Virus(nameInput.getText(), symptomBox.getValue());
+				Virus virus = new Virus(nameInput.getText(), symptomMap.get(symptomBox.getValue()));
+				// reove the symptom from the hashmap, so it cannot be chosen again
+				symptomMap.remove(symptomBox.getValue()); 
 				countryBox.getValue().addSick(1);
-				CountryView view = new CountryView(new World(countries, virus));
+				CountryView view = new CountryView(new World(countries, virus), symptomMap);
 				window.setHeight(820);
 				window.setWidth(850);
 			    primaryStage.getScene().setRoot(view.getRootPane());
@@ -62,7 +72,16 @@ public class Main extends Application {
 			
 			// symptoms combo box
 			symptomLabel = new Label("Choose the starting symptom");
-			symptomBox = new ComboBox<Symptom>(FXCollections.observableArrayList(symptoms));
+			ArrayList<String> symptoms = new ArrayList<String>();
+			// populate the combo box's array with the hashmap items
+    		Set set = symptomMap.entrySet();
+    		Iterator iterator = set.iterator();
+    		while (iterator.hasNext())
+    		{
+    			Map.Entry<String, Symptom> mentry = (Map.Entry<String, Symptom>) iterator.next();
+				symptoms.add(mentry.getKey());
+    		}
+			symptomBox = new ComboBox<String>(FXCollections.observableArrayList(symptoms));
 			symptomBox.setValue(symptoms.get(0));
 			
 			countryLabel = new Label("Choose the starting country");
@@ -132,6 +151,7 @@ public class Main extends Application {
 		 */
 		for (String s : names)
 		{
+			// this strips the file from the commas
 			String name = s.substring(0, s.indexOf(','));
 			s = s.substring(s.indexOf(',') + 1, s.length());
 			int population = Integer.parseInt(s.substring(0, s.indexOf(',')));
@@ -139,6 +159,7 @@ public class Main extends Application {
 			Boolean hot = s.substring(0, s.indexOf(',')).equals("Hot");
 			s = s.substring(s.indexOf(',') + 1, s.length());
 			int wealth = Integer.parseInt(s);
+			// create a different object based on if its hot or not
 			if (hot)
 			{
 				countries.add(new HotCountry(name, population, wealth));
@@ -151,9 +172,11 @@ public class Main extends Application {
 		return countries;
 	}
 	
-	private static ArrayList<Symptom> readSymptoms() 
+	/*
+	 * this function is the same as the one from the main class, but modifies the hashmap 
+	 */
+	private void readSymptoms() 
 	{
-		ArrayList<Symptom> symptoms = new ArrayList<Symptom>();
 		ArrayList<String> names = readNames("symptoms.txt");
 		/*
 		 * this loop will loop through the names arraylist and will strip the string s by separating the commas
@@ -166,8 +189,7 @@ public class Main extends Application {
 			int infectivity = Integer.parseInt(s.substring(0, s.indexOf(',')));
 			s = s.substring(s.indexOf(',') + 1, s.length());
 			int lethality = Integer.parseInt(s);
-			symptoms.add(new Symptom(name, infectivity, lethality));
+			symptomMap.put(name, new Symptom(name, infectivity, lethality)); // only add to the hashmap if the symptom doesn't already exist
 		}
-		return symptoms;
 	}
 }

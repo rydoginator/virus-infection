@@ -19,6 +19,31 @@ public class ColdCountry extends Country {
 		super.incrementDay();		
 	}
 	
+	// geneerate a random number for min and max
+	/*
+	 * random generates a random number and casts to a int since Math.random() returns a double
+	 * @param min the minimum number that you want returned
+	 * @param max the maximum number that you want returned
+	 * @returns the random number that was generated
+	 */
+    private int random(int min, int max) {
+        return (int) (Math.random()*(max-min))+min;
+    }
+	
+	public void decay(Virus virus) {
+		int lethality = virus.getLethality();
+		int rng;
+		int decayed = 0;
+		if (lethality > 0)
+		{
+			// roll a dice between 1 and the lethality rate, that will then "decease" a percent from the population 
+			rng = random(1, lethality); 
+			decayed = (super.getInfected() / 100) * rng;
+			super.addDeceased(decayed);
+		}
+		
+	}
+	
 	/*
 	 * Returns all the attributes of the object in a readable format
 	 */

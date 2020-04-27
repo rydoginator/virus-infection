@@ -29,10 +29,6 @@ public class HotCountry extends Country {
     private int random(int min, int max) {
         return (int) (Math.random()*(max-min))+min;
     }
-    
-    private Boolean range(int low, int high, int x) {
-    	return ((x - low) <= (high - low));
-    }
 	
 	public void decay(Virus virus) {
 		int lethality = virus.getLethality();
@@ -40,14 +36,9 @@ public class HotCountry extends Country {
 		int decayed = 0;
 		if (lethality > 0)
 		{
-			for (int i = 0; i < super.getInfected(); i++)
-			{
-				rng = random(1, 100); // roll a dice between 1,100, and if it is in range of lethality, then kill the person
-				if (range(0, lethality, rng)) // check if the rng is in range, if so, the person decays
-				{
-					decayed++;
-				}
-			}
+			// roll a dice between 1 and the lethality rate, that will then "decease" a percent from the population 
+			rng = random(1, lethality); 
+			decayed = (super.getInfected() / 100) * rng;
 			super.addDeceased(decayed);
 		}
 		

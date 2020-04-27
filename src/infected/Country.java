@@ -106,7 +106,7 @@ public class Country {
 	/*
 	 * spread will handle an exponential equation in order to spread throughout the country
 	 */
-	void spread(Virus virus) {
+	public void spread(Virus virus) {
 		double EULER = 2.718f;
 		// using Euler's number for exponential growth https://www.mathsisfun.com/algebra/exponential-growth.html
 		infected = (int) (infected * Math.pow(EULER, virus.getInfectivity() * day));

@@ -47,6 +47,15 @@ public class World {
     private int random(int min, int max) {
         return (int) (Math.random()*(max-min))+min;
     }
+    
+    public int getTotalSick() {
+    	int total = 0;
+    	for (Country c: countries)
+    	{
+    		total += c.getSick();
+    	}
+    	return total;
+    }
 	
 	/*
 	 * incrementDay just sets the world day to a new day
@@ -60,7 +69,7 @@ public class World {
 				c.spread(virus);
 				int travel = c.getWealth(); 
 				int sickTravelers = travel * (c.getSick() / c.getPop()); // this will determine how many travelers will travel to another country
-				// to make things simple, and less chaotic, a rng of 0 to 10 will determine whether they are sick enough to travel or not
+				// to make things simple, and less chaotic, a rng of 1 to 3 will determine whether they are sick enough to travel or not
 				boolean willTravel = (random(1,3) == 1) ? true: false;
 				// chose which country to infect based on rng
 				int id = random(0, countries.size());
