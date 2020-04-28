@@ -1,5 +1,10 @@
 package infected;
 
+/*
+ * Country is the super class for the hot country and cold country objects
+ * this just implements all the methods if a regular country object were to be created
+ */
+
 public class Country {
 	private String name;
 	private int population, infected, deceased, healthy;
@@ -15,7 +20,10 @@ public class Country {
 		this.deceased = 0;
 		this.day = 0;
 	}
-	
+	/*
+	 * getName will return the name of the country
+	 * @returns name
+	 */
 	public String getName() {
 		return name;
 	}
@@ -41,12 +49,20 @@ public class Country {
 			day = 1;
 	}
 	
+	/*
+	 * setSick will check if the amount you want to set sick is greather than the current amount of sick people and 
+	 * call addSick. this was created because of the exponetnial function keeps returning 1 when time is low (since its a double casted to int)
+	 * and when addSick was called, it would just keep doubling the sick population
+	 * @param sick the amount of people to set sick
+	 */
 	public void setSick(int sick) {
 		if (sick > infected)
 		{
 			addSick(sick - infected);
 		}
 	}
+	
+	
 	
 	/*
 	 * Getters and setters for the attributes
@@ -88,7 +104,10 @@ public class Country {
 	public void incrementDay() {
 		this.day++;
 	}
-	
+	/*
+	 * addDeceased will take a paramater deceased and will subtract from the sick population to kill them
+	 * @param deceased the deceased population to 
+	 */
 	public void addDeceased(int deceased) {
 		if (deceased > population)
 		{
@@ -115,7 +134,8 @@ public class Country {
 	
 	
 	/*
-	 * Returns all the attributes of the object in a readable format
+	 * getInfo returns all the attributes of the object in a readable format
+	 * @returns tmp, a formatted string to be used in textfields/labels
 	 */
 	public String getInfo() {
         String tmp = "";
@@ -135,15 +155,10 @@ public class Country {
     private int random(int min, int max) {
         return (int) (Math.random()*(max-min))+min;
     }
-    
-    private Boolean range(int low, int high, int x) {
-    	return ((x - low) <= (high - low));
-    }
-	
-	
+    	
     /*
      * decay will generate a random number inside a loop to determine whether the person dies
-     * @param Virus virus, the virus to get it's data
+     * @param Virus virus, the virus to get it's data from
      */
 	public void decay(Virus virus) {
 		int lethality = virus.getLethality();
@@ -151,16 +166,10 @@ public class Country {
 		int decayed = 0;
 		if (lethality > 0)
 		{
-			for (int i = 0; i < infected; i++)
-			{
-				rng = random(1, 100); // roll a dice between 1,100, and if it is in range of lethality, then kill the person
-				if (range(0, lethality, rng)) // check if the rng is in range, if so, the person decays
-				{
-					decayed++;
-				}
-			}
+			// roll a dice between 1 and the lethality rate, that will then "decease" a percent from the population 
+			rng = random(1, lethality); 
+			decayed = (infected / 100) * rng;
 			addDeceased(decayed);
 		}
-		
 	}
 }

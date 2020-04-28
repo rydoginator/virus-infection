@@ -17,6 +17,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -132,7 +134,12 @@ public class Main extends Application {
                 names.add(fileReader.nextLine());
             }
         }catch (FileNotFoundException e){
-                e.printStackTrace();
+        	// show error that file wasn't able to be loaded
+	        	Alert alert = new Alert(AlertType.ERROR);
+	        	alert.setTitle("Error Dialog");
+	        	alert.setHeaderText("File Not Found Exception");
+	        	alert.setContentText("Error while loading " + fname);
+	        	alert.showAndWait();
         }
         return names;
 	}
